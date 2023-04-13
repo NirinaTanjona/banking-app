@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: tanjona
+      POSTGRES_PASSWORD: tanjona
+      POSTGRES_DB: banking
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  api:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/code
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
