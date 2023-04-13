@@ -19,7 +19,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -148,3 +148,5 @@ REST_FRAMEWORK = {
 # Allow requests from client
 ALLOWED_HOSTS=['*']
 CORS_ORIGIN_ALLOW_ALL = True
+
+AUTH_USER_MODEL = "api.User"
