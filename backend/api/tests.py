@@ -1,5 +1,6 @@
 from rest_framework.test import APITestCase
 from api.models import User, Transaction
+from rest_framework.authtoken.models import Token
 
 class BankingApiTestCase(APITestCase):
     """
@@ -10,11 +11,11 @@ class BankingApiTestCase(APITestCase):
 
         self.user1 = User.objects.create_user(
             username='testuser1',
-            password='this_is_a_test'
+            password='0976'
         )
         self.user2 = User.objects.create_user(
             username='testuser2',
-            password='this_is_a_test'
+            password='2817'
         )
         self.admin = User.objects.create_superuser(
             username='admin',
@@ -26,6 +27,9 @@ class BankingApiTestCase(APITestCase):
         Transaction.objects.create(sender=self.user1, amount=100, type='D')
         Transaction.objects.create(sender=self.user1, amount=50, type='W')
 
+        # App create a Token in each user creation
+        self.token1 = Token.objects.get(user=self.user1)
+        self.tokenAdmin = Token.objects.get(user=self.admin)
 
     def test_users_role(self):
         '''
@@ -39,3 +43,10 @@ class BankingApiTestCase(APITestCase):
         test create 3 Transactions
         '''
         self.assertEqual(Transaction.objects.all().count(), 3)
+
+    def test_check_tokens(self):
+        '''
+        test if token exists when user is created
+        '''
+        self.assertIsNotNone(self.token1)
+        self.assertIsNotNone(self.tokenAdmin)
