@@ -15,6 +15,7 @@ class User(
 
     def check_balance(self, qty):
         # Used to check if withdrawal qty exceeds the balance
+        qty = Decimal(str(qty))
         if qty > self.balance:
             return False
         return True
@@ -43,8 +44,8 @@ class User(
 
     def withdraw(self, qty):
         # Make withdrawal for own account
-        qty = Decimal(str(qty))
         if self.check_balance(qty):
+            qty = Decimal(str(qty))
             self.balance -= qty
             Transaction.objects.create(
                 sender=self,
@@ -54,8 +55,8 @@ class User(
             self.save()
 
     def transfert(self, qty, receiver):
-        qty = Decimal(str(qty))
         if self.check_balance(qty):
+            qty = Decimal(str(qty))
             self.balance -= qty
             receiver.balance += qty
             receiver.save()
