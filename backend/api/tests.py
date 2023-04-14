@@ -50,3 +50,21 @@ class BankingApiTestCase(APITestCase):
         '''
         self.assertIsNotNone(self.token1)
         self.assertIsNotNone(self.tokenAdmin)
+
+    def test_deposit_on_account(self):
+        '''
+        test deposit on an account
+        '''
+        self.user1.deposit(300)
+        self.assertEqual(self.user1.balance, 300)
+
+    def test_withdrawal_on_account(self):
+        '''
+        test withdrawal on own account
+        '''
+        deposit = 300
+        withdraw = 50
+
+        self.user1.deposit(deposit)
+        self.user1.withdraw(withdraw)
+        self.assertEqual(self.user1.balance, deposit - withdraw)

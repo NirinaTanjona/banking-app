@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from utils.model_abstracts import Model
 from django_extensions.db.models import TimeStampedModel
@@ -8,10 +9,39 @@ class User(
     AbstractUser):
 
     def __str__(self):
-        return f'{self.username}'
+        return f'{self.username} model'
 
     balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
 
+    def check_balance(self, qty):
+        # Used to check if withdrawal qty exceeds the balance
+        if qty > self.balance:
+            return False
+        return True
+
+    def deposit(self, qty):
+        # Deposite on own account
+        #TODO deposite one others account
+        qty = Decimal(str(qty))
+        self.balance += qty
+        Transaction.objects.create(
+            sender=self,
+            type='D',
+            amount=qty
+        )
+        self.save()
+
+    def withdraw(self, qty):
+        # Make withdrawal for own account
+        qty = Decimal(str(qty))
+        if self.check_balance(qty):
+            self.balance -= qty
+            Transaction.objects.create(
+                sender=self,
+                type='W',
+                amount=qty
+            )
+            self.save()
 
 class Transaction(
     TimeStampedModel,
@@ -24,6 +54,9 @@ class Transaction(
 
     def __str__(self):
         return f'{self.type} from {self.sender} to {self.receiver}'
+
+    class Meta:
+        ordering= ['created']
 
 
     TRANSACTION_TYPE_CHOICES = [
