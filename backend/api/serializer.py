@@ -21,7 +21,12 @@ class UserSerializer(serializers.ModelSerializer):
         '''
         Used to validate Money retrieved amount
         '''
-        pass
+        quantity = res.get('quantity')
+        user = self.instance
+        if not user.check_stock(quantity):
+            raise NotEnoughMoneyException
+        return res
+        breakpoint()
 
 class Transaction(serializers.ModelSerializer):
 
