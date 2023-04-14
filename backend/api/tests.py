@@ -115,6 +115,6 @@ class BankingApiTestCase(APITestCase):
         '''
         test retrieve user data with all transactions
         '''
-        response = self.client.get('/user/', HTTP_ACCEPT='application/json')
+        response = self.client.get('/user/')
         breakpoint()
         self.assertEqual(response.status_code, status.HTTP_200_OK)

@@ -1,3 +1,4 @@
+import json
 from json import JSONDecodeError
 from rest_framework import parsers, renderers
 from django.http import JsonResponse
@@ -35,6 +36,7 @@ class UserViewSet(viewsets.GenericViewSet):
     View for showing User name and balance with, all user transactions
     '''
 
+    permission_classes = (IsAuthenticated,)
     serializer_class = TransactionSerializer
 
     def list(self, request):
@@ -46,7 +48,7 @@ class UserViewSet(viewsets.GenericViewSet):
                 'id': user.id,
                 'username': user.username,
                 'balance': user.balance,
-                'transactions': serializer.data,
+                'transactions': json.dumps(serializer.data),
             }
             return Response(data)
         except Exception as e:
