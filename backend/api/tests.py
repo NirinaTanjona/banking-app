@@ -1,6 +1,8 @@
 from rest_framework.test import APITestCase
 from api.models import User, Transaction
 from rest_framework.authtoken.models import Token
+from rest_framework.test import APIClient
+from rest_framework import status
 
 class BankingApiTestCase(APITestCase):
     """
@@ -30,6 +32,10 @@ class BankingApiTestCase(APITestCase):
         # App create a Token in each user creation
         self.token1 = Token.objects.get(user=self.user1)
         self.tokenAdmin = Token.objects.get(user=self.admin)
+
+        # Client API for test purpose
+        self.client = APIClient()
+
 
     def test_users_role(self):
         '''
@@ -89,3 +95,16 @@ class BankingApiTestCase(APITestCase):
         self.user1.transfert(transfert_amount, self.user2)
         self.assertEqual(self.user2.balance, transfert_amount)
         self.assertEqual(self.user1.balance, deposit_amount - transfert_amount)
+
+    def test_register_user_and_obtain_token(self):
+        '''
+        test create user by registering in client then obtain the token
+        '''
+        data = {'username': 'test_req_1', 'password': '1232'}
+
+        response = self.client.post('/sign-up/', data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # get the Token
+        response = self.client.post('/sign-in/', data)
+        self.assertIsNotNone(response.data)

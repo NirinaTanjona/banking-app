@@ -26,9 +26,8 @@ class UserSerializer(serializers.ModelSerializer):
         if not user.check_stock(quantity):
             raise NotEnoughMoneyException
         return res
-        breakpoint()
 
-class Transaction(serializers.ModelSerializer):
+class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
