@@ -19,17 +19,27 @@ class User(
             return False
         return True
 
-    def deposit(self, qty):
+    def deposit(self, qty, receiver=None):
         # Deposite on own account
-        #TODO deposite one others account
+
         qty = Decimal(str(qty))
-        self.balance += qty
-        Transaction.objects.create(
-            sender=self,
-            type='D',
-            amount=qty
-        )
-        self.save()
+        if receiver:
+            receiver.balance += qty
+            Transaction.objects.create(
+                sender=self,
+                type='D',
+                amount=qty,
+                receiver=receiver
+            )
+            receiver.save()
+        else:
+            self.balance += qty
+            Transaction.objects.create(
+                sender=self,
+                type='D',
+                amount=qty
+            )
+            self.save()
 
     def withdraw(self, qty):
         # Make withdrawal for own account
@@ -40,6 +50,20 @@ class User(
                 sender=self,
                 type='W',
                 amount=qty
+            )
+            self.save()
+
+    def transfert(self, qty, receiver):
+        qty = Decimal(str(qty))
+        if self.check_balance(qty):
+            self.balance -= qty
+            receiver.balance += qty
+            receiver.save()
+            Transaction.objects.create(
+                sender=self,
+                type='T',
+                amount=qty,
+                receiver=receiver
             )
             self.save()
 
