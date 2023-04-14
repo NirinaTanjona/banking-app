@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { auth } from './utils';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { SignIn, SignUp } from './pages';
+import { SignIn, SignUp, UserDashboard } from './pages';
 
 
 
@@ -13,7 +13,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="sign-up" element={<SignUp />} />
-        <Route path="sign-in" element={authenticated ? <Navigate to="/accounts" /> : <SignIn />} />
+        <Route path="sign-in" element={authenticated ? <Navigate to="/UserDashboard" /> : <SignIn />} />
+        <Route path="userDashboard" element={<UserDashboard />} />
       </Routes>
     </BrowserRouter>
   );
