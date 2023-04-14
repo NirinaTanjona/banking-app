@@ -9,6 +9,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin,UpdateModelMixin,RetrieveModelMixin, DestroyModelMixin, CreateModelMixin
 
 
@@ -37,9 +38,11 @@ class UserViewSet(viewsets.GenericViewSet):
     '''
 
     permission_classes = (IsAuthenticated,)
-    serializer_class = TransactionSerializer
+    serializer_class = UserSerializer
 
-    def list(self, request):
+
+    @action(detail=False, serializer_class=TransactionSerializer, permission_classes = (IsAuthenticated,))
+    def getUserData(self, request):
         try:
             user = request.user
             transaction = Transaction.objects.filter(sender=user) | Transaction.objects.filter(receiver=user)
