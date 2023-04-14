@@ -33,6 +33,6 @@ class Transaction(
     ]
 
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender_user')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver_user')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver_user', null=True, blank=True)
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     type = models.CharField(max_length=1, choices=TRANSACTION_TYPE_CHOICES)
