@@ -28,7 +28,7 @@ class User(
             receiver.balance += qty
             Transaction.objects.create(
                 sender=self,
-                type='D',
+                transaction_type='D',
                 amount=qty,
                 receiver=receiver
             )
@@ -37,7 +37,7 @@ class User(
             self.balance += qty
             Transaction.objects.create(
                 sender=self,
-                type='D',
+                transaction_type='D',
                 amount=qty
             )
             self.save()
@@ -49,7 +49,7 @@ class User(
             self.balance -= qty
             Transaction.objects.create(
                 sender=self,
-                type='W',
+                transaction_type='W',
                 amount=qty
             )
             self.save()
@@ -62,7 +62,7 @@ class User(
             receiver.save()
             Transaction.objects.create(
                 sender=self,
-                type='T',
+                transaction_type='T',
                 amount=qty,
                 receiver=receiver
             )
@@ -78,7 +78,7 @@ class Transaction(
     """
 
     def __str__(self):
-        return f'{self.type} from {self.sender} to {self.receiver}'
+        return f'{self.transaction_type} from {self.sender} to {self.receiver}'
 
     class Meta:
         ordering= ['created']
@@ -93,4 +93,4 @@ class Transaction(
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender_user')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver_user', null=True, blank=True)
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    type = models.CharField(max_length=1, choices=TRANSACTION_TYPE_CHOICES)
+    transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPE_CHOICES)

@@ -5,6 +5,7 @@ from api import views
 from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
+router.register(r'user', views.UserViewSet, basename='user')
 
 
 urlpatterns = router.urls

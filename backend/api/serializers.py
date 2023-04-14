@@ -15,7 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User,
-        fields = ('balance',)
+        fields = ('name', 'balance',)
+
+
 
     def validate(self, res: OrderedDict):
         '''
@@ -31,4 +33,4 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = ('id', 'sender', 'receiver', 'amount', 'type')
+        fields = ('id', 'sender', 'receiver', 'amount', 'transaction_type')

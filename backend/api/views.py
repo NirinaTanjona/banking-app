@@ -15,7 +15,7 @@ class UserRegister(APIView):
     '''
     User for user sign-up
     '''
-    parser_classes = (parsers.JSONParser,)
+    parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
     renderer_classes = (renderers.JSONRenderer,)
 
     def post(self, request):
@@ -28,3 +28,26 @@ class UserRegister(APIView):
             return Response({'message': 'You are registered'}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'message': f'Error in registration: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserViewSet(viewsets.GenericViewSet):
+    '''
+    View for showing User name and balance with, all user transactions
+    '''
+
+    serializer_class = TransactionSerializer
+
+    def list(self, request):
+        try:
+            user = request.user
+            transaction = Transaction.objects.filter(sender=user) | Transaction.objects.filter(receiver=user)
+            serializer = self.get_serializer(transaction, many=True)
+            data = {
+                'id': user.id,
+                'username': user.username,
+                'balance': user.balance,
+                'transactions': serializer.data,
+            }
+            return Response(data)
+        except Exception as e:
+            return Response({'message': f'Error in: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)

@@ -25,9 +25,9 @@ class BankingApiTestCase(APITestCase):
         )
 
         # Create some Transactions
-        Transaction.objects.create(sender=self.user1, receiver=self.user2, amount=200, type='T')
-        Transaction.objects.create(sender=self.user1, amount=100, type='D')
-        Transaction.objects.create(sender=self.user1, amount=50, type='W')
+        Transaction.objects.create(sender=self.user1, receiver=self.user2, amount=200, transaction_type='T')
+        Transaction.objects.create(sender=self.user1, amount=100, transaction_type='D')
+        Transaction.objects.create(sender=self.user1, amount=50, transaction_type='W')
 
         # App create a Token in each user creation
         self.token1 = Token.objects.get(user=self.user1)
@@ -36,6 +36,8 @@ class BankingApiTestCase(APITestCase):
         # Client API for test purpose
         self.client = APIClient()
 
+        #We pass the token in all calls to the API
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token1.key)
 
     def test_users_role(self):
         '''
@@ -108,3 +110,11 @@ class BankingApiTestCase(APITestCase):
         # get the Token
         response = self.client.post('/sign-in/', data)
         self.assertIsNotNone(response.data)
+
+    def test_retrieve_user_data(self):
+        '''
+        test retrieve user data with all transactions
+        '''
+        response = self.client.get('/user/', HTTP_ACCEPT='application/json')
+        breakpoint()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
