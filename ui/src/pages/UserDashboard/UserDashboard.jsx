@@ -7,8 +7,8 @@ import Button from '@mui/material/Button'
 const UserDashboard = () => {
 
     const [ data, setData ] = useState([])
-    const [ quantity, setQuantity ] = useState()
-    const [ receiver, setReceiver ] = useState()
+    const [ quantity, setQuantity ] = useState("")
+    const [ receiver, setReceiver ] = useState("")
 
     const handleQuantity = (e) => {
         setQuantity(e.target.value)
@@ -18,25 +18,32 @@ const UserDashboard = () => {
         setReceiver(e.target.value)
     }
 
-    const deposit = async () => {
+    const getUserData = () => {
         try {
-            await network.PATCH(`/user/deposit/`, {quantity, receiver}).then(response => {
+            network.GET(`/user/getUserData/`).then(response => {
+                setData(response.data)
+            })
+            } catch (e) {
+            logger.error('Error fetching Summaries', e)
+        }
+    }
+
+    const deposit = async () => {
+        console.log('')
+        try {
+            await network.POST(`/user/${data.id}}/deposit/`, {quantity, receiver}).then(response => {
                 console.log(response.data)
+                setQuantity("")
+                setReceiver("")
+                getUserData()
             })
         } catch(e) {
             logger('error', e)
         }
-
     }
 
     useEffect(() => {
-    try {
-        network.GET(`/user/getUserData/`).then(response => {
-            setData(response.data)
-        })
-        } catch (e) {
-        logger.error('Error fetching Summaries', e)
-        }
+        getUserData()
     }, [])
     return (
         <div>
@@ -54,7 +61,7 @@ const UserDashboard = () => {
                     value={receiver}
                     onChange={handleReceiver}
                 />
-                <Button onCick={deposit}>Deposit</Button>
+                <Button onClick={deposit}>Deposit</Button>
             </Box>
         </div>)
 

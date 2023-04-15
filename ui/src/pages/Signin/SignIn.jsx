@@ -13,7 +13,7 @@ function SignIn() {
       await network.POST_USER(`/sign-in/`, { username, password }).then(response => {
         auth.setAuth(response.data.token)
       }).then(() => {
-        window.location.href = '/accounts/'
+        window.location.href = '/UserDashboard/'
       })
     } catch (e) {
       logger.error("Error sign in", e)

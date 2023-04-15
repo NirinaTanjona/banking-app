@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="sign-up" element={<SignUp />} />
-        <Route path="sign-in" element={authenticated ? <Navigate to="/UserDashboard" /> : <SignIn />} />
+        <Route path="sign-in" element={authenticated ? <Navigate to="/userDashboard" /> : <SignIn />} />
         <Route path="userDashboard" element={<UserDashboard />} />
       </Routes>
     </BrowserRouter>
