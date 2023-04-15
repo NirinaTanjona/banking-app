@@ -136,7 +136,7 @@ class BankingApiTestCase(APITestCase):
 
     def test_deposit_on_user_account(self):
         '''
-        deposit on user account with client API
+        test deposit on user account with client API
         '''
         data = { "quantity": 300 , "receiver": None}
         response = self.client.post(f'/user/{self.user1.id}/deposit/', data)
@@ -144,7 +144,7 @@ class BankingApiTestCase(APITestCase):
 
     def test_withdraw_user_account(self):
         '''
-        withdraw on user account with client API
+        test withdraw on user account with client API
         '''
         self.user1.deposit(400)
         data = { "quantity": 300 }
@@ -153,9 +153,17 @@ class BankingApiTestCase(APITestCase):
 
     def test_transfert_to_other_user_account(self):
         '''
-        Transfert on another account with client API
+        test Transfert on another account with client API
         '''
         self.user1.deposit(400)
         data = { "quantity": 300 , "receiver": self.user2.id }
         response = self.client.post(f'/user/{self.user1.id}/transfer/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_user_detail_from_admin_account(self):
+        '''
+        test get user detail from admin account
+        '''
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.tokenAdmin.key)
+        response = self.client.get(f'/admin/users/{self.user1.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
