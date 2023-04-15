@@ -53,6 +53,7 @@ class UserViewSet(viewsets.GenericViewSet):
                 'id': user.id,
                 'username': user.username,
                 'balance': user.balance,
+                'is_staff': user.is_staff,
                 'transactions': serializer.data
             }
             return Response(data)

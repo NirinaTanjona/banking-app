@@ -135,7 +135,7 @@ const UserDashboard = () => {
                     onChange={handleTransfertReceiver}
                     required
                 />
-                <Button onClick={deposit}>Transfert</Button>
+                <Button onClick={transfert}>Transfert</Button>
                 <Link to={`/sign-out`}>sign-out</Link>
             </Box>
         </div>)

@@ -1,3 +1,3 @@
-import Admin from 'AdminDashboard'
+import AdminDashboard from './AdminDashboard'
 
-export default Admin
+export default AdminDashboard
