@@ -18,7 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id','username', 'balance']
 
 
-
     # def validate(self, res: OrderedDict):
     #     '''
     #     Used to validate Money retrieved amount
