@@ -10,6 +10,8 @@ const UserDashboard = () => {
     const [ depoQuantity, setDepoQuantity ] = useState("")
     const [ depoReceiver, setDepoReceiver ] = useState("")
     const [ withdrawQuantity, setWithdrawQuantity] = useState("")
+    const [ transfertQuantity, setTransfertQuantity] = useState("")
+    const [ transfertReceiver, setTransfertReceiver] = useState("")
 
 
     const getUserData = () => {
@@ -49,6 +51,20 @@ const UserDashboard = () => {
         }
     }
 
+    const transfert = async () => {
+        const depositData = { 'quantity': transfertQuantity , 'receiver': transfertReceiver}
+        try {
+            await network.POST(`/user/${data.id}}/transfert/`, depositData).then(response => {
+                console.log(response.data)
+                setTransfertQuantity("")
+                setTransfertReceiver("")
+                getUserData()
+            })
+        } catch(e) {
+            logger('error', e)
+        }
+    }
+
     const handleDepoQuantity = (e) => {
         setDepoQuantity(e.target.value)
     }
@@ -61,6 +77,14 @@ const UserDashboard = () => {
         setWithdrawQuantity(e.target.value)
     }
 
+    const handleTransfert = (e) => {
+        setTransfertQuantity(e.target.value)
+    }
+
+    const handleTransfertReceiver = (e) => {
+        setTransfertReceiver(e.target.value)
+    }
+
     useEffect(() => {
         getUserData()
     }, [])
@@ -70,14 +94,14 @@ const UserDashboard = () => {
             <Box>
                 <h1>Deposit</h1>
                 <TextField
-                    label='depoQuantity'
+                    label='deposit'
                     type='number'
                     value={depoQuantity}
                     onChange={handleDepoQuantity}
                     required
                 />
                 <TextField
-                    label='depoReceiver'
+                    label='receiver'
                     value={depoReceiver}
                     onChange={handleDepoReceiver}
                 />
@@ -86,13 +110,30 @@ const UserDashboard = () => {
             <Box>
                 <h1>withdraw</h1>
                 <TextField
-                    label='depoQuantity'
+                    label='withdraw'
                     type='number'
                     value={withdrawQuantity}
                     onChange={handleWithdrawal}
                     required
                 />
                 <Button onClick={withdraw}>Withdraw</Button>
+            </Box>
+            <Box>
+                <h1>Transfert</h1>
+                <TextField
+                    label='transfert'
+                    type='number'
+                    value={transfertQuantity}
+                    onChange={handleTransfert}
+                    required
+                />
+                <TextField
+                    label='receiver'
+                    value={transfertReceiver}
+                    onChange={handleTransfertReceiver}
+                    required
+                />
+                <Button onClick={deposit}>Transfert</Button>
             </Box>
         </div>)
 
