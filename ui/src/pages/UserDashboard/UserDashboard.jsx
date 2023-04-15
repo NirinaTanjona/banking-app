@@ -3,6 +3,7 @@ import { network, logger } from '../../utils'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
 
 const UserDashboard = () => {
 
@@ -18,6 +19,7 @@ const UserDashboard = () => {
         try {
             network.GET(`/user/getUserData/`).then(response => {
                 setData(response.data)
+                console.log("super: ", response.data.is_superuser)
             })
             } catch (e) {
             logger.error('Error fetching Summaries', e)
@@ -134,6 +136,7 @@ const UserDashboard = () => {
                     required
                 />
                 <Button onClick={deposit}>Transfert</Button>
+                <Link to={`/sign-out`}>sign-out</Link>
             </Box>
         </div>)
 

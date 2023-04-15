@@ -12,7 +12,7 @@ export const getToken = () => {
   return Cookies.get('authToken')
 }
 
-export const setAuth = (token: string) => {
+export const setAuth = (token) => {
   console.log(token)
   Cookies.set('authToken', token, {secure: true})
 
