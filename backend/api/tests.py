@@ -122,7 +122,7 @@ class BankingApiTestCase(APITestCase):
         '''
         test retrieve users data from admin account
         '''
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token1.key)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.tokenAdmin.key)
         response = self.client.get('/admin/transactions/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -130,6 +130,14 @@ class BankingApiTestCase(APITestCase):
         '''
         test retrieve users data from admin account
         '''
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token1.key)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.tokenAdmin.key)
         response = self.client.get('/admin/users/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_deposit_on_user_account(self):
+        '''
+        deposit on user account with client API
+        '''
+        data = { "quantity": 300 , "receiver": None}
+        response = self.client.post(f'/user/{self.user1.id}/deposit/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

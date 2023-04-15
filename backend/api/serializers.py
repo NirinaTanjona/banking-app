@@ -31,7 +31,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    sender = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    receiver = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
 
     class Meta:
         model = Transaction
-        fields = ('id', 'amount', 'transaction_type')
+        fields = ('id', 'amount', 'transaction_type', 'sender', 'receiver')

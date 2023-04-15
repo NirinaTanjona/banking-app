@@ -83,7 +83,7 @@ class Transaction(
     """
 
     def __str__(self):
-        return f'{self.transaction_type} from {self.sender.name} to {self.receiver.name}'
+        return f'{self.transaction_type} from {self.sender.username} to {self.receiver.username}'
 
     class Meta:
         ordering= ['created']

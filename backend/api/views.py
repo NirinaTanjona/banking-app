@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal
 from json import JSONDecodeError
 from rest_framework import parsers, renderers
 from django.http import JsonResponse
@@ -37,7 +38,8 @@ class UserViewSet(viewsets.GenericViewSet):
     View for showing User name and balance with, all user transactions
     '''
 
-    permission_classes = (IsAuthenticated,)
+    queryset = User.objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
 
 
@@ -51,13 +53,28 @@ class UserViewSet(viewsets.GenericViewSet):
                 'id': user.id,
                 'username': user.username,
                 'balance': user.balance,
-                'transactions': json.dumps(serializer.data),
+                'transactions': serializer.data
             }
             return Response(data)
         except Exception as e:
             return Response({'message': f'Error in: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
-# TODO: Finding bug here
+    @action(detail=True, methods=['post'])
+    def deposit(self, request, pk=None):
+        try:
+            user = self.get_object()
+            qty = Decimal(request.data['quantity'])
+            receiver_id = request.data['receiver']
+            if receiver_id:
+                receiver = User.objects.get(pk=receiver_id)
+                user.deposit(qty, receiver)
+            else:
+                user.deposit(qty)
+            return Response({'message': f'Deposit Successfull!'})
+        except Exception as e:
+            return Response({'message': f'Error in:  {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class AdminUsersDataViewSet(
     CreateModelMixin,
     DestroyModelMixin,
@@ -73,7 +90,7 @@ class AdminUsersDataViewSet(
         return User.objects.all()
 
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
 
 class AdminTransactionDataViewSet(
     CreateModelMixin,
@@ -90,4 +107,4 @@ class AdminTransactionDataViewSet(
         return Transaction.objects.all()
 
     serializer_class = TransactionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
