@@ -74,6 +74,17 @@ class UserViewSet(viewsets.GenericViewSet):
         except Exception as e:
             return Response({'message': f'Error in:  {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=['post'])
+    def withdraw(self, request, pk=None):
+        try:
+            user = self.get_object()
+            qty = Decimal(request.data['quantity'])
+            user.withdraw(qty)
+            return Response({'message': f'withdrawal Successfull!'})
+        except Exception as e:
+            return Response({'message': f'Error in:  {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class AdminUsersDataViewSet(
     CreateModelMixin,

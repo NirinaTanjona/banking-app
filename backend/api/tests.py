@@ -141,3 +141,12 @@ class BankingApiTestCase(APITestCase):
         data = { "quantity": 300 , "receiver": None}
         response = self.client.post(f'/user/{self.user1.id}/deposit/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_withdraw_user_account(self):
+        '''
+        withdraw on user account with client API
+        '''
+        self.user1.deposit(400)
+        data = { "quantity": 300 }
+        response = self.client.post(f'/user/{self.user1.id}/withdraw/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
