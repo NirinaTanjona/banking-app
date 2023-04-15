@@ -7,16 +7,10 @@ import Button from '@mui/material/Button'
 const UserDashboard = () => {
 
     const [ data, setData ] = useState([])
-    const [ quantity, setQuantity ] = useState("")
-    const [ receiver, setReceiver ] = useState("")
+    const [ depoQuantity, setDepoQuantity ] = useState("")
+    const [ depoReceiver, setDepoReceiver ] = useState("")
+    const [ withdrawQuantity, setWithdrawQuantity] = useState("")
 
-    const handleQuantity = (e) => {
-        setQuantity(e.target.value)
-    }
-
-    const handleReceiver = (e) => {
-        setReceiver(e.target.value)
-    }
 
     const getUserData = () => {
         try {
@@ -29,17 +23,42 @@ const UserDashboard = () => {
     }
 
     const deposit = async () => {
-        console.log('')
+        const depositData = { 'quantity': depoQuantity , 'receiver': depoReceiver}
         try {
-            await network.POST(`/user/${data.id}}/deposit/`, {quantity, receiver}).then(response => {
+            await network.POST(`/user/${data.id}}/deposit/`, depositData).then(response => {
                 console.log(response.data)
-                setQuantity("")
-                setReceiver("")
+                setDepoQuantity("")
+                setDepoReceiver("")
                 getUserData()
             })
         } catch(e) {
             logger('error', e)
         }
+    }
+
+    const withdraw = async () => {
+        const withdrawData = { 'quantity': withdrawQuantity }
+        try {
+            await network.POST(`/user/${data.id}}/withdraw/`, withdrawData).then(response => {
+                console.log(response.data)
+                setWithdrawQuantity("")
+                getUserData()
+            })
+        } catch(e) {
+            logger('error', e)
+        }
+    }
+
+    const handleDepoQuantity = (e) => {
+        setDepoQuantity(e.target.value)
+    }
+
+    const handleDepoReceiver = (e) => {
+        setDepoReceiver(e.target.value)
+    }
+
+    const handleWithdrawal = (e) => {
+        setWithdrawQuantity(e.target.value)
     }
 
     useEffect(() => {
@@ -49,19 +68,31 @@ const UserDashboard = () => {
         <div>
             <pre>{JSON.stringify(data, null, 2)}</pre>
             <Box>
+                <h1>Deposit</h1>
                 <TextField
-                    label='quantity'
+                    label='depoQuantity'
                     type='number'
-                    value={quantity}
-                    onChange={handleQuantity}
+                    value={depoQuantity}
+                    onChange={handleDepoQuantity}
                     required
                 />
                 <TextField
-                    label='receiver'
-                    value={receiver}
-                    onChange={handleReceiver}
+                    label='depoReceiver'
+                    value={depoReceiver}
+                    onChange={handleDepoReceiver}
                 />
                 <Button onClick={deposit}>Deposit</Button>
+            </Box>
+            <Box>
+                <h1>withdraw</h1>
+                <TextField
+                    label='depoQuantity'
+                    type='number'
+                    value={withdrawQuantity}
+                    onChange={handleWithdrawal}
+                    required
+                />
+                <Button onClick={withdraw}>Withdraw</Button>
             </Box>
         </div>)
 
