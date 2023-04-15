@@ -85,6 +85,18 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response({'message': f'Error in:  {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+    @action(detail=True, methods=['post'])
+    def transfer(self, request, pk=None):
+        try:
+            user = self.get_object()
+            qty = Decimal(request.data['quantity'])
+            receiver_id = request.data['receiver']
+            receiver = User.objects.get(pk=receiver_id)
+            user.transfer(qty, receiver)
+            return Response({'message': f'Transfert Successfull!'})
+        except Exception as e:
+            return Response({'message': f'Error in:  {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class AdminUsersDataViewSet(
     CreateModelMixin,

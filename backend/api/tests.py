@@ -94,7 +94,7 @@ class BankingApiTestCase(APITestCase):
         transfert_amount = 50
 
         self.user1.deposit(deposit_amount)
-        self.user1.transfert(transfert_amount, self.user2)
+        self.user1.transfer(transfert_amount, self.user2)
         self.assertEqual(self.user2.balance, transfert_amount)
         self.assertEqual(self.user1.balance, deposit_amount - transfert_amount)
 
@@ -149,4 +149,13 @@ class BankingApiTestCase(APITestCase):
         self.user1.deposit(400)
         data = { "quantity": 300 }
         response = self.client.post(f'/user/{self.user1.id}/withdraw/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_transfert_to_other_user_account(self):
+        '''
+        Transfert on another account with client API
+        '''
+        self.user1.deposit(400)
+        data = { "quantity": 300 , "receiver": self.user2.id }
+        response = self.client.post(f'/user/{self.user1.id}/transfer/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

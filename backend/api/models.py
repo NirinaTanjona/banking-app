@@ -59,7 +59,7 @@ class User(
             )
             self.save()
 
-    def transfert(self, qty, receiver):
+    def transfer(self, qty, receiver):
         if self.check_balance(qty):
             qty = Decimal(str(qty))
             self.balance -= qty
