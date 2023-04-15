@@ -8,6 +8,11 @@ class User(
     Model,
     AbstractUser):
 
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
+
     def __str__(self):
         return f'{self.username} model'
 
@@ -78,10 +83,12 @@ class Transaction(
     """
 
     def __str__(self):
-        return f'{self.transaction_type} from {self.sender} to {self.receiver}'
+        return f'{self.transaction_type} from {self.sender.name} to {self.receiver.name}'
 
     class Meta:
         ordering= ['created']
+        verbose_name = 'Transaction'
+        verbose_name_plural = 'Transactions'
 
 
     TRANSACTION_TYPE_CHOICES = [

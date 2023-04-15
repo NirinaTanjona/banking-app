@@ -15,22 +15,23 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User,
-        fields = ('name', 'balance',)
+        fields = ('id','name', 'balance',)
 
 
 
-    def validate(self, res: OrderedDict):
-        '''
-        Used to validate Money retrieved amount
-        '''
-        quantity = res.get('quantity')
-        user = self.instance
-        if not user.check_stock(quantity):
-            raise NotEnoughMoneyException
-        return res
+    # def validate(self, res: OrderedDict):
+    #     '''
+    #     Used to validate Money retrieved amount
+    #     '''
+    #     quantity = res.get('quantity')
+    #     user = self.instance
+    #     if not user.check_stock(quantity):
+    #         raise NotEnoughMoneyException
+    #     return res
+
 
 class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = ('id', 'sender', 'receiver', 'amount', 'transaction_type')
+        fields = ('id', 'amount', 'transaction_type')

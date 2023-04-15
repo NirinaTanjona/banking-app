@@ -6,7 +6,7 @@ from .serializers import UserSerializer, TransactionSerializer
 from .models import User , Transaction
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -56,3 +56,38 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response(data)
         except Exception as e:
             return Response({'message': f'Error in: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
+# TODO: Finding bug here
+class AdminUsersDataViewSet(
+    CreateModelMixin,
+    DestroyModelMixin,
+    UpdateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    viewsets.GenericViewSet):
+    '''
+    Viewset that shows all User for admin user
+    '''
+
+    def get_queryset(self):
+        return User.objects.all()
+
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+class AdminTransactionDataViewSet(
+    CreateModelMixin,
+    DestroyModelMixin,
+    UpdateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    viewsets.GenericViewSet):
+    '''
+    Viewset that shows all User for admin user
+    '''
+
+    def get_queryset(self):
+        return Transaction.objects.all()
+
+    serializer_class = TransactionSerializer
+    permission_classes = [IsAuthenticated]
