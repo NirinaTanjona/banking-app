@@ -126,10 +126,10 @@ class BankingApiTestCase(APITestCase):
         response = self.client.get('/admin/transactions/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_retrieve_users_data_from_admin_account(self):
-    #     '''
-    #     test retrieve users data from admin account
-    #     '''
-    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token1.key)
-    #     response = self.client.get('/admin/users/')
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_retrieve_users_data_from_admin_account(self):
+        '''
+        test retrieve users data from admin account
+        '''
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token1.key)
+        response = self.client.get('/admin/users/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

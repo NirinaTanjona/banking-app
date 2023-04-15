@@ -14,8 +14,8 @@ class NotEnoughMoneyException(APIException):
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = User,
-        fields = ('id','name', 'balance',)
+        model = User
+        fields = ['id','username', 'balance']
 
 
 
