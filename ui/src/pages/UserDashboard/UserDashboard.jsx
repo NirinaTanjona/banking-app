@@ -99,6 +99,9 @@ const UserDashboard = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Dashboard
             </Typography>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Balance: {data.balance}
+            </Typography>
             <Button color="inherit" component={Link} to={`/sign-out`}>
                 Logout
             </Button>
