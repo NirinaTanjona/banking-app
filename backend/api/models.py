@@ -33,7 +33,7 @@ class User(
             receiver.balance += qty
             Transaction.objects.create(
                 sender=self,
-                transaction_type='D',
+                transaction_type='Deposit',
                 amount=qty,
                 receiver=receiver
             )
@@ -42,7 +42,7 @@ class User(
             self.balance += qty
             Transaction.objects.create(
                 sender=self,
-                transaction_type='D',
+                transaction_type='Deposit',
                 amount=qty
             )
             self.save()
@@ -54,7 +54,7 @@ class User(
             self.balance -= qty
             Transaction.objects.create(
                 sender=self,
-                transaction_type='W',
+                transaction_type='Withdraw',
                 amount=qty
             )
             self.save()
@@ -67,7 +67,7 @@ class User(
             receiver.save()
             Transaction.objects.create(
                 sender=self,
-                transaction_type='T',
+                transaction_type='Transfer',
                 amount=qty,
                 receiver=receiver
             )
@@ -92,12 +92,12 @@ class Transaction(
 
 
     TRANSACTION_TYPE_CHOICES = [
-        ('D', 'Deposit'),
-        ('W', 'Withdrawal'),
-        ('T', 'Transfer'),
+        ('Deposit', 'Deposit'),
+        ('Withdraw', 'Withdrawal'),
+        ('Transfer', 'Transfer'),
     ]
 
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender_user')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver_user', null=True, blank=True)
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPE_CHOICES)
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPE_CHOICES)
