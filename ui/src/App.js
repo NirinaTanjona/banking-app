@@ -9,6 +9,7 @@ function App() {
 
   const [authenticated] = useState(auth.isAuth());
   const [authorized] = useState(auth.isAuthorized())
+  console.log("authorized: ", authorized)
 
   return (
     <BrowserRouter>
