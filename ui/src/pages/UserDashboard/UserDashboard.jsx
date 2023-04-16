@@ -138,7 +138,7 @@ const UserDashboard = () => {
                 <Grid item xs={12} sm={5}>
                 <TextField
                     fullWidth
-                    label="Receiver"
+                    label="Receiver id"
                     value={depoReceiver}
                     onChange={handleDepoReceiver}
                 />
@@ -188,7 +188,7 @@ const UserDashboard = () => {
                 <Grid item xs={12} sm={5}>
                 <TextField
                     fullWidth
-                    label="Receiver"
+                    label="Receiver id"
                     value={transfertReceiver}
                     onChange={handleTransfertReceiver}
                     required
