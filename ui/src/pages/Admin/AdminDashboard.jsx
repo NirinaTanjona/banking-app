@@ -43,7 +43,7 @@ function TransactionsList({ transactions, deleteTransaction }) {
                 {transactions?.map((item) => (
                     <ListItem key={item.id}>
                         <Link to={`/admin/transactions/${item.id}`}>
-                            <ListItemText primary={item.created} />
+                            <ListItemText primary={new Date(item.created).toLocaleString()} />
                         </Link>
                         <Typography sx={{ml: 5}}>{item.transaction_type}</Typography>
                         <ListItemSecondaryAction>

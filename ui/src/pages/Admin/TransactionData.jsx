@@ -38,7 +38,7 @@ export const TransactionData = () => {
           <Grid item xs={12}>
             <Typography variant="h6">
               <strong>Transaction Type:</strong>{" "}
-              {data.transaction_type === "D" ? "Debit" : "Credit"}
+              {data.transaction_type}
             </Typography>
           </Grid>
           <Grid item xs={12}>
