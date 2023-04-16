@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { auth, network, logger } from './utils';
+import { useState } from 'react'
+import { auth } from './utils';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData, UserEdit, TransactionEdit } from './pages';
+import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData, UserEdit, TransactionEdit, LandingPage } from './pages';
 import Unauthorized from './components/Unauthorized'
 
 
@@ -23,6 +23,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="sign-up" element={<SignUp />} />
         {SignInRoute()}
         <Route path="userDashboard" element={<UserDashboard />} />
