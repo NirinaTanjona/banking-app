@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { auth, network, logger } from './utils';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData } from './pages';
+import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData, UserEdit } from './pages';
 
 
 
@@ -20,6 +20,7 @@ function App() {
         <Route path="sign-out" element={<SignOut />} />
         <Route path="admin" element={authenticated && authorized ? <AdminDashboard /> : <Navigate to = "/" />} />
         <Route path="admin/users/:id" element={authenticated && authorized ? <UserData /> : <Navigate to = "/" /> } />
+        <Route path="admin/users/:id/edit" element={authenticated && authorized ? <UserEdit /> : <Navigate to = "/" />} />
         <Route path="admin/transactions/:id" element={authenticated && authorized ? <TransactionData /> : <Navigate to = "/" />} />
       </Routes>
     </BrowserRouter>

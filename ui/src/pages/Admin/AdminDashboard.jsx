@@ -66,7 +66,7 @@ const AdminDashboard = () => {
                     return (
                     <li key={item.id}>
                         <Link to={`/admin/users/${item.id}/`}>{item.username}</Link>
-                        <Button>Edit</Button>
+                        <Link to={`/admin/users/${item.id}/edit/`}><Button>Edit</Button></Link>
                         <Button onClick={() => deleteUser(item.id)}>Delete</Button>
                     </li>
                     )
@@ -79,7 +79,6 @@ const AdminDashboard = () => {
                     return (
                     <li key={item.id}>
                         <Link to={`/admin/transactions/${item.id}/`}>{item.created}</Link>
-                        <Button>Edit</Button>
                         <Button onClick={() => deleteTransaction(item.id)}>Delete</Button>
                     </li>
                     )
