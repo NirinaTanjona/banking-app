@@ -92,7 +92,6 @@ const UserDashboard = () => {
 
     return (
         <div>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
             <Box>
                 <h1>Deposit</h1>
                 <TextField
@@ -138,6 +137,7 @@ const UserDashboard = () => {
                 <Button onClick={transfert}>Transfert</Button>
                 <Link to={`/sign-out`}>sign-out</Link>
             </Box>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>)
 
 }

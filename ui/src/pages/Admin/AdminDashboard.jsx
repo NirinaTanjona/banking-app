@@ -85,6 +85,7 @@ const AdminDashboard = () => {
                     )
                 })}
             </ul>
+            <Link to={`/sign-out`}><Button>sign out</Button></Link>
         </div>
     )
 }
