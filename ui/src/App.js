@@ -8,6 +8,7 @@ import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, Trans
 function App() {
 
   const [authenticated] = useState(auth.isAuth());
+  const [authorized] = useState(auth.isAuthorized())
 
   return (
     <BrowserRouter>
@@ -16,9 +17,9 @@ function App() {
         <Route path="sign-in" element={authenticated ? <Navigate to="/userDashboard" /> : <SignIn />} />
         <Route path="userDashboard" element={<UserDashboard />} />
         <Route path="sign-out" element={<SignOut />} />
-        <Route path="admin" element={<AdminDashboard />} />
-        <Route path="admin/users/:id" element={authenticated ? <UserData /> : <Navigate to = "/" /> } />
-        <Route path="admin/transactions/:id" element={authenticated ? <TransactionData /> : <Navigate to = "/" />} />
+        <Route path="admin" element={authenticated && authorized ? <AdminDashboard /> : <Navigate to = "/" />} />
+        <Route path="admin/users/:id" element={authenticated && authorized ? <UserData /> : <Navigate to = "/" /> } />
+        <Route path="admin/transactions/:id" element={authenticated && authorized ? <TransactionData /> : <Navigate to = "/" />} />
       </Routes>
     </BrowserRouter>
   );
