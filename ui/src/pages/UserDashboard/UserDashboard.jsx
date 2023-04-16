@@ -19,7 +19,6 @@ const UserDashboard = () => {
         try {
             network.GET(`/user/getUserData/`).then(response => {
                 setData(response.data)
-                console.log("super: ", response.data.is_superuser)
             })
             } catch (e) {
             logger.error('Error fetching Summaries', e)
@@ -90,6 +89,7 @@ const UserDashboard = () => {
     useEffect(() => {
         getUserData()
     }, [])
+
     return (
         <div>
             <pre>{JSON.stringify(data, null, 2)}</pre>

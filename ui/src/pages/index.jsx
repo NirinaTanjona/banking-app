@@ -3,5 +3,7 @@ import SignOut from './Signin/SignOut'
 import SignUp from './Signup'
 import UserDashboard from './UserDashboard'
 import AdminDashboard from './Admin'
+import { UserData } from './Admin/UserData'
+import { TransactionData } from './Admin/TransactionData'
 
-export { SignIn, SignOut, SignUp, UserDashboard, AdminDashboard}
+export { SignIn, SignOut, SignUp, UserDashboard, AdminDashboard, UserData, TransactionData}

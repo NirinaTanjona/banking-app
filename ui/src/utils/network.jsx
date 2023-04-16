@@ -10,7 +10,7 @@ Axios.interceptors.response.use((response) => {
       return response;
     }, (error) => {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
-      if (error.response.status === 401) {
+      if (error.response.status_code === 401) {
         // logout()
         window.location.href = '/sign-in'
     } else {

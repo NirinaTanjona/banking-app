@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { auth, network, logger } from './utils';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard } from './pages';
+import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData } from './pages';
 
 
 
@@ -17,6 +17,8 @@ function App() {
         <Route path="userDashboard" element={<UserDashboard />} />
         <Route path="sign-out" element={<SignOut />} />
         <Route path="admin" element={<AdminDashboard />} />
+        <Route path="admin/users/:id" element={authenticated ? <UserData /> : <Navigate to = "/" /> } />
+        <Route path="admin/transactions/:id" element={authenticated ? <TransactionData /> : <Navigate to = "/" />} />
       </Routes>
     </BrowserRouter>
   );

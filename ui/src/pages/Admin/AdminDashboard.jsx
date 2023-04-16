@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { network, logger } from '../../utils'
+import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
 
 
 
@@ -28,6 +30,26 @@ const AdminDashboard = () => {
         }
     }
 
+    const deleteUser = async (id) => {
+        try {
+            await network.DELETE(`/admin/users/${id}/`).then(response => {
+                getUsers()
+            })
+          } catch (e) {
+            logger.error("Error on delete user", e)
+        }
+    }
+
+    const deleteTransaction = async (id) => {
+        try {
+            await network.DELETE(`/admin/transactions/${id}/`).then(response => {
+                getTransactions()
+            })
+          } catch (e) {
+            logger.error("Error on delete user", e)
+        }
+    }
+
 
 
     useEffect(() => {
@@ -39,10 +61,30 @@ const AdminDashboard = () => {
     return (
         <div>
             <h1>Users</h1>
-            <pre>{JSON.stringify(users, null, 2)}</pre>
+            <ul>
+                {users?.map((item) => {
+                    return (
+                    <li key={item.id}>
+                        <Link to={`/admin/users/${item.id}/`}>{item.username}</Link>
+                        <Button>Edit</Button>
+                        <Button onClick={deleteUser(item.id)}>Delete</Button>
+                    </li>
+                    )
+                })}
+            </ul>
             <br></br>
             <h1>Transaction</h1>
-            <pre>{JSON.stringify(transactions, null, 2)}</pre>
+            <ul>
+                {transactions?.map((item) => {
+                    return (
+                    <li key={item.id}>
+                        <Link to={`/admin/transactions/${item.id}/`}>{item.created}</Link>
+                        <Button>Edit</Button>
+                        <Button onClick={deleteTransaction(item.id)}>Delete</Button>
+                    </li>
+                    )
+                })}
+            </ul>
         </div>
     )
 }
