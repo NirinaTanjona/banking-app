@@ -79,6 +79,7 @@ const AdminDashboard = () => {
                     return (
                     <li key={item.id}>
                         <Link to={`/admin/transactions/${item.id}/`}>{item.created}</Link>
+                        <Link to={`/admin/transactions/${item.id}/edit/`}><Button>Edit</Button></Link>
                         <Button onClick={() => deleteTransaction(item.id)}>Delete</Button>
                     </li>
                     )
