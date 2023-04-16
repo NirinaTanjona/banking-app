@@ -4,8 +4,8 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Typography, Container, AppBar, Toolbar } from '@mui/material';
-
+import { Grid, Typography, Container, AppBar, Toolbar } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 const UserDashboard = () => {
 
@@ -15,6 +15,16 @@ const UserDashboard = () => {
     const [ withdrawQuantity, setWithdrawQuantity] = useState("")
     const [ transfertQuantity, setTransfertQuantity] = useState("")
     const [ transfertReceiver, setTransfertReceiver] = useState("")
+
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 300 },
+        { field: 'amount', headerName: 'Amount', width: 75 },
+        { field: 'transaction_type', headerName: 'Transaction Type', width: 75 },
+        { field: 'receiver', headerName: 'Receiver', width: 300 },
+        { field: 'sender', headerName: 'Sender', width: 300 },
+        { field: 'created', headerName: 'Creacted', width: 300},
+      ];
 
 
     const getUserData = () => {
@@ -191,32 +201,16 @@ const UserDashboard = () => {
                 </Grid>
             </Grid>
             </Container>
-            <TableContainer>
-            <Table>
-                <TableHead>
-                <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Transaction Type</TableCell>
-                    <TableCell>Sender</TableCell>
-                    <TableCell>Receiver</TableCell>
-                    <TableCell>Created</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {data.transactions?.map((row) => (
-                    <TableRow key={row.id}>
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
-                    <TableCell>{row.transaction_type}</TableCell>
-                    <TableCell>{row.sender}</TableCell>
-                    <TableCell>{row.receiver}</TableCell>
-                    <TableCell>{row.created}</TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-            </TableContainer>
+            <Box sx={{ mt: 5, height: 400, width: '100%' }}>
+                { data.transactions &&
+                    <DataGrid
+                        rows={data.transactions}
+                        columns={columns}
+                        autoPageSize={true}
+                        disableRowSelectionOnClick
+                    />
+                }
+            </Box>
         </Box>
         </div>
     )
