@@ -9,13 +9,22 @@ function App() {
 
   const [authenticated] = useState(auth.isAuth());
   const [authorized] = useState(auth.isAuthorized())
-  console.log("authorized: ", authorized)
+
+  const SignInRoute = () => {
+    if (authenticated && authorized) {
+      return (<Route path="sign-in" element={<Navigate to="/admin" />} />)
+    } else if (authenticated) {
+      return (<Route path="sign-in" element={<Navigate to="/userDashboard" /> } />)
+    } else {
+      return (<Route path="sign-in" element={<SignIn />} />)
+    }
+  }
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="sign-up" element={<SignUp />} />
-        <Route path="sign-in" element={authenticated ? <Navigate to="/userDashboard" /> : <SignIn />} />
+        {SignInRoute()}
         <Route path="userDashboard" element={<UserDashboard />} />
         <Route path="sign-out" element={<SignOut />} />
         <Route path="admin" element={authenticated && authorized ? <AdminDashboard /> : <Navigate to = "/" />} />
