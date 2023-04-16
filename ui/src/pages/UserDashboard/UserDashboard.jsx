@@ -57,7 +57,7 @@ const UserDashboard = () => {
     const transfert = async () => {
         const depositData = { 'quantity': transfertQuantity , 'receiver': transfertReceiver}
         try {
-            await network.POST(`/user/${data.id}}/transfert/`, depositData).then(response => {
+            await network.POST(`/user/${data.id}}/transfer/`, depositData).then(response => {
                 console.log(response.data)
                 setTransfertQuantity("")
                 setTransfertReceiver("")
@@ -97,7 +97,7 @@ const UserDashboard = () => {
         <AppBar position="static">
             <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Dashboard
+                {data.username}
             </Typography>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Balance: {data.balance}

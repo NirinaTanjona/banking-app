@@ -8,6 +8,7 @@ const LandingPage = () => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [hasError, setError] = useState(false)
 
 
     const handleSubmit = async () => {
@@ -22,6 +23,7 @@ const LandingPage = () => {
           }
         })
       } catch (e) {
+        setError(true)
         logger.error("Error sign in", e)
       }
     }
@@ -54,13 +56,14 @@ const LandingPage = () => {
             <Typography sx={{mb: 3}} variant="h6" component="h2" align="center">
               Sign In
             </Typography>
+            {hasError && (<Typography sx={{ color: 'red', mb: 3 }} variant="body2" component="h2" align="center">Invalid Username or password.</Typography>)}
             <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          spacing={5}
-        >
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing={5}
+            >
           <Grid item>
             <TextField
               sx={{width: 390}}

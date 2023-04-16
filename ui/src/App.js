@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { auth } from './utils';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { SignIn, SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData, UserEdit, TransactionEdit, LandingPage } from './pages';
+import { SignUp, UserDashboard, SignOut, AdminDashboard, UserData, TransactionData, UserEdit, TransactionEdit, LandingPage } from './pages';
 import Unauthorized from './components/Unauthorized'
 
 
@@ -12,11 +12,11 @@ function App() {
 
   const SignInRoute = () => {
     if (authenticated && authorized) {
-      return (<Route path="sign-in" element={<Navigate to="/admin" />} />)
+      return (<Route path="/" element={<Navigate to="/admin" />} />)
     } else if (authenticated) {
-      return (<Route path="sign-in" element={<Navigate to="/userDashboard" /> } />)
+      return (<Route path="/" element={<Navigate to="/userDashboard" /> } />)
     } else {
-      return (<Route path="sign-in" element={<SignIn />} />)
+      return (<Route path="/" element={<LandingPage />} />)
     }
   }
 
@@ -26,7 +26,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="sign-up" element={<SignUp />} />
         {SignInRoute()}
-        <Route path="userDashboard" element={<UserDashboard />} />
+        <Route path="userDashboard" element={authenticated ? <UserDashboard /> : <Navigate to = "/access-denied" />} />
         <Route path="sign-out" element={<SignOut />} />
         <Route path="admin" element={authenticated && authorized ? <AdminDashboard /> : <Navigate to = "/access-denied" />} />
         <Route path="admin/users/:id" element={authenticated && authorized ? <UserData /> : <Navigate to = "/access-denied" /> } />
