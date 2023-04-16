@@ -1,7 +1,68 @@
 import { useState, useEffect } from 'react'
 import { network, logger } from '../../utils'
-import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
+import { AppBar, Toolbar, Typography, Button, IconButton, ListItemSecondaryAction, ListItemText, ListItem, List} from '@mui/material'
+import DeleteIcon from "@mui/icons-material/Delete";
+
+function UsersList({ users, deleteUser }) {
+    return (
+        <>
+            <Typography variant="h5" component="h2" gutterBottom>
+                Users
+            </Typography>
+            <List>
+                {users?.map((item) => (
+                    <ListItem key={item.id}>
+                        <Link to={`/admin/users/${item.id}`}>
+                            <ListItemText primary={item.username} />
+                        </Link>
+                        <ListItemSecondaryAction>
+                            <Link to={`/admin/users/${item.id}/edit`}>
+                                <Button variant="contained" color="primary">
+                                    Edit
+                                </Button>
+                            </Link>
+                            <IconButton onClick={() => deleteUser(item.id)}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
+        </>
+    );
+}
+
+function TransactionsList({ transactions, deleteTransaction }) {
+    return (
+        <>
+            <Typography variant="h5" component="h2" gutterBottom>
+                Transactions
+            </Typography>
+            <List>
+                {transactions?.map((item) => (
+                    <ListItem key={item.id}>
+                        <Link to={`/admin/transactions/${item.id}`}>
+                            <ListItemText primary={item.created} />
+                        </Link>
+                        <Typography sx={{ml: 5}}>{item.transaction_type}</Typography>
+                        <ListItemSecondaryAction>
+                            <Link to={`/admin/transactions/${item.id}/edit`}>
+                                <Button variant="contained" color="primary">
+                                    Edit
+                                </Button>
+                            </Link>
+                            <IconButton onClick={() => deleteTransaction(item.id)}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
+        </>
+    );
+}
+
 
 
 
@@ -60,32 +121,20 @@ const AdminDashboard = () => {
 
     return (
         <div>
-            <h1>Users</h1>
-            <ul>
-                {users?.map((item) => {
-                    return (
-                    <li key={item.id}>
-                        <Link to={`/admin/users/${item.id}/`}>{item.username}</Link>
-                        <Link to={`/admin/users/${item.id}/edit/`}><Button>Edit</Button></Link>
-                        <Button onClick={() => deleteUser(item.id)}>Delete</Button>
-                    </li>
-                    )
-                })}
-            </ul>
-            <br></br>
-            <h1>Transaction</h1>
-            <ul>
-                {transactions?.map((item) => {
-                    return (
-                    <li key={item.id}>
-                        <Link to={`/admin/transactions/${item.id}/`}>{item.created}</Link>
-                        <Link to={`/admin/transactions/${item.id}/edit/`}><Button>Edit</Button></Link>
-                        <Button onClick={() => deleteTransaction(item.id)}>Delete</Button>
-                    </li>
-                    )
-                })}
-            </ul>
-            <Link to={`/sign-out`}><Button>sign out</Button></Link>
+            <AppBar position="static">
+                <Toolbar>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Dashboard
+                </Typography>
+                <Button color="inherit" component={Link} to={`/sign-out`}>
+                    Logout
+                </Button>
+                </Toolbar>
+            </AppBar>
+            <UsersList users={users} deleteUser={deleteUser} />
+            <br />
+            <TransactionsList transactions={transactions} deleteTransaction={deleteTransaction} />
+
         </div>
     )
 }
