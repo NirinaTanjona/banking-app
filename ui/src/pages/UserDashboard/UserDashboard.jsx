@@ -4,6 +4,8 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Typography, Container } from '@mui/material';
+
 
 const UserDashboard = () => {
 
@@ -92,54 +94,122 @@ const UserDashboard = () => {
 
     return (
         <div>
-            <Box>
-                <h1>Deposit</h1>
+        <Box>
+            <Container maxWidth="md">
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom>
+                    Deposit
+                </Typography>
+                </Grid>
+                <Grid item xs={12} sm={5}>
                 <TextField
-                    label='deposit'
-                    type='number'
+                    fullWidth
+                    label="Deposit Amount"
+                    type="number"
                     value={depoQuantity}
                     onChange={handleDepoQuantity}
                     required
                 />
+                </Grid>
+                <Grid item xs={12} sm={5}>
                 <TextField
-                    label='receiver'
+                    fullWidth
+                    label="Receiver"
                     value={depoReceiver}
                     onChange={handleDepoReceiver}
                 />
-                <Button onClick={deposit}>Deposit</Button>
-            </Box>
-            <Box>
-                <h1>withdraw</h1>
+                </Grid>
+                <Grid item xs={2}>
+                <Button variant="contained" color="primary" onClick={deposit}>
+                    Deposit
+                </Button>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom>
+                    Withdraw
+                </Typography>
+                </Grid>
+                <Grid item xs={10}>
                 <TextField
-                    label='withdraw'
-                    type='number'
+                    fullWidth
+                    label="Withdraw Amount"
+                    type="number"
                     value={withdrawQuantity}
                     onChange={handleWithdrawal}
                     required
                 />
-                <Button onClick={withdraw}>Withdraw</Button>
-            </Box>
-            <Box>
-                <h1>Transfert</h1>
+                </Grid>
+                <Grid item xs={2}>
+                <Button variant="contained" color="primary" onClick={withdraw}>
+                    Withdraw
+                </Button>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom>
+                    Transfer
+                </Typography>
+                </Grid>
+                <Grid item xs={12} sm={5}>
                 <TextField
-                    label='transfert'
-                    type='number'
+                    fullWidth
+                    label="Transfer Amount"
+                    type="number"
                     value={transfertQuantity}
                     onChange={handleTransfert}
                     required
                 />
+                </Grid>
+                <Grid item xs={12} sm={5}>
                 <TextField
-                    label='receiver'
+                    fullWidth
+                    label="Receiver"
                     value={transfertReceiver}
                     onChange={handleTransfertReceiver}
                     required
                 />
-                <Button onClick={transfert}>Transfert</Button>
-                <Link to={`/sign-out`}>sign-out</Link>
-            </Box>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>)
+                </Grid>
+                <Grid item xs={2}>
+                <Button variant="contained" color="primary" onClick={transfert}>
+                    Transfer
+                </Button>
+                </Grid>
+            </Grid>
+            </Container>
 
+            <Link to={`/sign-out`}>Sign Out</Link>
+
+            <TableContainer>
+            <Table>
+                <TableHead>
+                <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>Transaction Type</TableCell>
+                    <TableCell>Sender</TableCell>
+                    <TableCell>Receiver</TableCell>
+                    <TableCell>Created</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {data.transactions?.map((row) => (
+                    <TableRow key={row.id}>
+                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.transaction_type}</TableCell>
+                    <TableCell>{row.sender}</TableCell>
+                    <TableCell>{row.receiver}</TableCell>
+                    <TableCell>{row.created}</TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+            </TableContainer>
+        </Box>
+        </div>
+    )
 }
 
 export default UserDashboard
