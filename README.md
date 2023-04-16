@@ -73,3 +73,9 @@ npm start
 ```
 
 You should now be able to use the application.
+
+# Exemple of the running app
+
+![Welcome page screenshoot](./screenshots/signin.png)
+
+![Dashboard screenshoot](./screenshots/dashboard.png)
