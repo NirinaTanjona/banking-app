@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Typography, Container } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Grid, Typography, Container, AppBar, Toolbar } from '@mui/material';
 
 
 const UserDashboard = () => {
@@ -94,6 +94,16 @@ const UserDashboard = () => {
 
     return (
         <div>
+        <AppBar position="static">
+            <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Dashboard
+            </Typography>
+            <Button color="inherit" component={Link} to={`/sign-out`}>
+                Logout
+            </Button>
+            </Toolbar>
+        </AppBar>
         <Box>
             <Container maxWidth="md">
             <Grid container spacing={2}>
@@ -178,9 +188,6 @@ const UserDashboard = () => {
                 </Grid>
             </Grid>
             </Container>
-
-            <Link to={`/sign-out`}>Sign Out</Link>
-
             <TableContainer>
             <Table>
                 <TableHead>
