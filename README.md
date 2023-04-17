@@ -79,3 +79,18 @@ You should now be able to use the application.
 ![Welcome page screenshoot](./ui/screenshots/signin.png)
 
 ![Dashboard screenshoot](./ui/screenshots/dashboard.png)
+
+To create a user admin (superuser)
+
+go To the root of the app and run this command
+
+```
+sudo docker ps --format "{{.ID}} {{.Names}}"
+```
+this should return name of the project followed by `_api_1`
+
+```
+sudo docker exec -it <container_name_api_1> python manage.py createsuperuser
+```
+
+NOTE: This command will work only if the server is running.
