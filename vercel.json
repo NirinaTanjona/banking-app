@@ -1,14 +1,14 @@
 {
     "builds": [
         {
-            "src": "banking-app/banking/wsgi.py",
+            "src": "banking/wsgi.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "banking-app/banking/wsgi.py"
+            "dest": "banking/wsgi.py"
         }
     ]
 }
