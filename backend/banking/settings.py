@@ -63,7 +63,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'banking.wsgi.application'
+WSGI_APPLICATION = 'banking.wsgi.app'
 
 
 # Database
@@ -150,7 +150,7 @@ REST_FRAMEWORK = {
 }
 
 # Allow requests from client
-ALLOWED_HOSTS=['*']
+ALLOWED_HOSTS=['127.0.0.1', '.vercel.app']
 CORS_ORIGIN_ALLOW_ALL = True
 
 AUTH_USER_MODEL = "api.User"
